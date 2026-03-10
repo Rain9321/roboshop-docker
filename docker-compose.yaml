@@ -38,6 +38,14 @@ services:
       - catalogue
       - user 
       - cart
+  cart:
+    image: cart:v1
+    container_name: cart
+    networks:
+      - roboshop
+    depends_on:
+      - redis
+      - catalogue
     
 
   
