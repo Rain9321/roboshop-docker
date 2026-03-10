@@ -9,6 +9,10 @@ services:
     container_name: mongodb
     networks:
       - roboshop
+    volumes:
+      - source: mongodb
+        target: /data/db
+        type: volume
 
   catalogue:
     image: rain9321/catalogue:v1
@@ -23,6 +27,10 @@ services:
     container_name: redis
     networks:
       - roboshop
+    volumes:
+      - source: redis
+        target: /data
+        type: volume
 
   user:
     image: rain9321/user:v1
@@ -47,6 +55,10 @@ services:
     container_name: mysql
     networks:
       - roboshop
+    volumes:
+      - source: mysql
+        target: /var/lib/mysql
+        type: volume
 
   shipping:
     image: rain9321/shipping:v1
@@ -62,6 +74,10 @@ services:
     container_name: rabbitmq
     networks:
       - roboshop
+    volumes:
+      - source: rabbitmq
+        target: /var/lib/rabbitmq
+        type: volume
     environment:
       - RABBITMQ_DEFAULT_USER=roboshop
       - RABBITMQ_DEFAULT_PASS=roboshop123
