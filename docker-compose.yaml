@@ -1,37 +1,37 @@
 networks:
   roboshop:
     driver: bridge
-
+volumes:
+  mongodb:
+  redis:
+  mysql:
+  rabbitmq:
 services:
-
   mongodb:
     image: rain9321/mongodb:v1
     container_name: mongodb
     networks:
       - roboshop
     volumes:
-      - source: mongodb
-        target: /data/db
-        type: volume
-
+    - source: mongodb
+      target: /data/db
+      type: volume
   catalogue:
     image: rain9321/catalogue:v1
     container_name: catalogue
     networks:
-      - roboshop
+    - roboshop
     depends_on:
-      - mongodb
-
+    - mongodb
   redis:
     image: redis
     container_name: redis
     networks:
       - roboshop
     volumes:
-      - source: redis
-        target: /data
-        type: volume
-
+    - source: redis
+      target: /data
+      type: volume
   user:
     image: rain9321/user:v1
     container_name: user
@@ -40,7 +40,6 @@ services:
     depends_on:
       - mongodb
       - redis
-
   cart:
     image: rain9321/cart:v1
     container_name: cart
@@ -49,17 +48,15 @@ services:
     depends_on:
       - redis
       - catalogue
-
   mysql:
     image: rain9321/mysql:v1
     container_name: mysql
     networks:
       - roboshop
     volumes:
-      - source: mysql
-        target: /var/lib/mysql
-        type: volume
-
+    - source: mysql
+      target: /var/lib/mysql
+      type: volume
   shipping:
     image: rain9321/shipping:v1
     container_name: shipping
@@ -68,20 +65,18 @@ services:
     depends_on:
       - cart
       - mysql
-
   rabbitmq:
     image: rabbitmq
     container_name: rabbitmq
     networks:
       - roboshop
     volumes:
-      - source: rabbitmq
-        target: /var/lib/rabbitmq
-        type: volume
+    - source: rabbitmq
+      target: /var/lib/rabbitmq
+      type: volume
     environment:
-      - RABBITMQ_DEFAULT_USER=roboshop
-      - RABBITMQ_DEFAULT_PASS=roboshop123
-
+    - RABBITMQ_DEFAULT_USER=roboshop
+    - RABBITMQ_DEFAULT_PASS=roboshop123
   payment:
     image: rain9321/payment:v1
     container_name: payment
@@ -91,17 +86,16 @@ services:
       - cart
       - user
       - rabbitmq
-
   web:
     image: rain9321/web:v1
     container_name: web
     networks:
-      - roboshop
+    - roboshop
     ports:
-      - "80:80"
+    - "80:80"
     depends_on:
-      - catalogue
-      - user
-      - cart
-      - shipping
-      - payment
+    - catalogue
+    - user
+    - cart
+    - shipping
+    - payment
