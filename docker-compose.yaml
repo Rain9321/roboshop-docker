@@ -67,7 +67,7 @@ services:
       - user
       - rabbitmq
   web:
-    image: rain9321/web:v1
+    image: web:v1
     container_name: web
     networks:
     - roboshop
