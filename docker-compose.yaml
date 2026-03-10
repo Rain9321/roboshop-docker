@@ -3,6 +3,7 @@ networks:
     driver: bridge
 services:
   mongodb:
+    build: ./mongodb
     image: mongodb:v1
     container_name: mongodb
     networks:
