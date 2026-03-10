@@ -41,7 +41,7 @@ services:
     networks:
       - roboshop
   shipping:
-    image: joindevops/shipping:v1
+    image: shipping:v1
     container_name: shipping
     networks:
       - roboshop
