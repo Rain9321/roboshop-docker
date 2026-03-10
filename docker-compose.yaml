@@ -12,7 +12,7 @@ services:
     container_name: catalogue
     networks:
       - roboshop
-    depends on:
+    depends_on:
       - mongodb
   redis:
     image: redis
