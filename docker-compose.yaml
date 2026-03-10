@@ -49,6 +49,7 @@ services:
       - cart
       - mysql
   rabbitmq:
+    image : rabbitmq
     container_name: rabbitmq
     networks:
       - roboshop
