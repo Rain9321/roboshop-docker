@@ -1,64 +1,73 @@
 networks:
   roboshop:
     driver: bridge
+
 services:
+
   mongodb:
-    build: ./mongodb
-    image: mongodb:v1
+    image: rain9321/mongodb:v1
     container_name: mongodb
     networks:
       - roboshop
+
   catalogue:
-    image: catalogue:v1
+    image: rain9321/catalogue:v1
     container_name: catalogue
     networks:
       - roboshop
     depends_on:
       - mongodb
+
   redis:
     image: redis
     container_name: redis
     networks:
       - roboshop
+
   user:
-    image: user:v1
+    image: rain9321/user:v1
     container_name: user
     networks:
       - roboshop
     depends_on:
       - mongodb
       - redis
+
   cart:
-    image: cart:v1
+    image: rain9321/cart:v1
     container_name: cart
     networks:
       - roboshop
     depends_on:
       - redis
       - catalogue
+
   mysql:
-    image: mysql:v1
+    image: rain9321/mysql:v1
     container_name: mysql
     networks:
       - roboshop
+
   shipping:
-    image: shipping:v1
+    image: rain9321/shipping:v1
     container_name: shipping
     networks:
       - roboshop
     depends_on:
       - cart
       - mysql
+
   rabbitmq:
-    image : rabbitmq
+    image: rabbitmq
     container_name: rabbitmq
     networks:
       - roboshop
     environment:
       - RABBITMQ_DEFAULT_USER=roboshop
       - RABBITMQ_DEFAULT_PASS=roboshop123
+
   payment:
-    image: payment:v1
+    image: rain9321/payment:v1
     container_name: payment
     networks:
       - roboshop
@@ -66,20 +75,17 @@ services:
       - cart
       - user
       - rabbitmq
+
   web:
-    image: web:v1
+    image: rain9321/web:v1
     container_name: web
     networks:
-    - roboshop
+      - roboshop
     ports:
-    - "80:80"
+      - "80:80"
     depends_on:
-    - catalogue
-    - user
-    - cart
-    - shipping
-    - payment
-  
-    
-
-  
+      - catalogue
+      - user
+      - cart
+      - shipping
+      - payment
